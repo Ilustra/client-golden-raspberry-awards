@@ -1,0 +1,48 @@
+<div style=" width: 100%; display: flex; justify-content: center;  ">
+
+    <div >
+        <!-- Filter by year and winners -->
+        <div>
+            <mat-form-field appearance="outline">
+                <mat-label>Ano</mat-label>
+                <input matInput placeholder="Ex. 1980" type="number" [(ngModel)]="selectedYear" (input)="onYearChange($event)"
+                    placeholder="Digite o ano">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Winners</mat-label>
+                <select [(ngModel)]="selectedWinner" (change)="onWinnerChange($event)" matNativeControl >
+                    <option value="">Todos</option>
+                    <option value="true">Sim</option>
+                    <option value="false">Não</option>
+                </select>
+            </mat-form-field>
+        </div>
+
+        <!-- view table -->
+        <app-widget-table *ngIf="list" [columns]="columns" [dataSource]="dataSource"></app-widget-table>
+
+        <!-- paginated -->
+        <div style="display: flex; justify-content: center;   ">
+            <!-- selected page size -->
+            <mat-form-field appearance="outline" style="width: 150px; padding: 0px; margin: 0px;">
+                <mat-label>Itens por página:</mat-label>
+                <select [(ngModel)]="pageable.pageSize" (change)="onSizeChange($event)" matNativeControl>
+                       <option *ngFor="let size of pageSizeOptions" [value]="size">{{ size }}</option>
+                </select>
+            </mat-form-field>
+
+            <!-- navigation previews or next page -->
+            <div *ngIf="pageData"
+                style="display: flex; justify-content: center;  align-items: center; margin-top: -20px;">
+                <button matIconButton (click)="onPreviousPage()" [disabled]="pageable.pageNumber === 0">
+                    <mat-icon>arrow_back_ios_new</mat-icon></button>
+                <span>Página {{ pageable.pageNumber + 1 }} de {{ pageData.totalPages }}</span>
+                <button matIconButton (click)="onNextPage()"
+                    [disabled]="pageable.pageNumber + 1 >= pageData.totalPages">
+                    <mat-icon>arrow_forward_ios</mat-icon></button>
+
+            </div>
+        </div>
+    </div>
+
+</div>

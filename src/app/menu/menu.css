@@ -1,0 +1,12 @@
+.menu{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+.menu .item {
+    padding: 10px;
+    border: 1px solid #dbdbdb;
+    margin: 5px;
+    border-radius: 10px;
+}
