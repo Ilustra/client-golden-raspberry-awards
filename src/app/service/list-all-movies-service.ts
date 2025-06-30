@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ListAllMoviesService extends CrudService<Movie, number> {
-// /?page=0&size=20
+
   constructor(protected override _http: HttpClient) {
   super(_http, 'movies');
   }
