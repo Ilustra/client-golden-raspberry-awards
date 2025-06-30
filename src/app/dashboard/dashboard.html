@@ -1,21 +1,18 @@
 <div style="  display: flex; flex-wrap: wrap; ">
-        
+    <!-- Anos com mais de um vencedor -->
     <div class="card">
         <app-more-one-winner></app-more-one-winner>
     </div>
-
-        <div class="card">
-            
-                <app-winners-by-year>
-                    
-                </app-winners-by-year>
-        </div>
-      
-            <div class="card">
-                <app-producers-with-interval-victories></app-producers-with-interval-victories>
-            </div>
-   
-  <div class="card">
-                 <app-studios-most-wins></app-studios-most-wins>
-            </div>
+    <!-- Filme por Ano -->
+    <div class="card">
+        <app-winners-by-year></app-winners-by-year>
+    </div>
+    <!--  Intervalo de prêmios -->
+    <div class="card"> 
+        <app-producers-with-interval-victories></app-producers-with-interval-victories> 
+    </div>
+    <!-- Estúdios -->
+    <div class="card">
+        <app-studios-most-wins></app-studios-most-wins>
+    </div>
 </div>
