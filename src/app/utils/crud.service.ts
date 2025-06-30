@@ -17,17 +17,7 @@ export abstract class CrudService<T, ID> implements Crud<T, ID> {
 
 
   findAll(page: string): Observable<PageData> {
-    return this._http.get<PageData>(this._baseUrl + '/'  + this._api+page)
-  }
-
-  findAllPaginated(searchText: string, pageSize: number, pageIndex: number): Observable<PageData> {
-    let params = new HttpParams();
-    params = params.set('searchText', searchText);
-    params = params.set('pageSize', (pageSize ? pageSize : "") + "");
-    params = params.set('pageIndex', (pageIndex ? pageIndex : "") + "");
-
-    return this._http.get<PageData>(this._baseUrl + "/" + this._api, { params: params });
-
+    return this._http.get<PageData>(this._baseUrl   + this._api + page)
   }
  
 }

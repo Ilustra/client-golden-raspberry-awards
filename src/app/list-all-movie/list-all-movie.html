@@ -1,14 +1,18 @@
-<div style=" width: 100%; display: flex; justify-content: center;  ">
+<div style="padding: 10px;">
 
-    <div >
+
         <!-- Filter by year and winners -->
-        <div>
-            <mat-form-field appearance="outline">
+        <div class="card-filter">
+            <div>
+                <p>Filters:</p>
+            </div>
+            <div class="container">
+            <mat-form-field appearance="outline" class="yaer" >
                 <mat-label>Ano</mat-label>
                 <input matInput placeholder="Ex. 1980" type="number" [(ngModel)]="selectedYear" (input)="onYearChange($event)"
                     placeholder="Digite o ano">
             </mat-form-field>
-            <mat-form-field appearance="outline">
+            <mat-form-field appearance="outline" class="winner">
                 <mat-label>Winners</mat-label>
                 <select [(ngModel)]="selectedWinner" (change)="onWinnerChange($event)" matNativeControl >
                     <option value="">Todos</option>
@@ -16,13 +20,22 @@
                     <option value="false">Não</option>
                 </select>
             </mat-form-field>
+
+            </div>
+
+        </div>
+        <div style="margin: 20px;">
+            <!-- view table -->
+            <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+            <app-widget-table  [columns]="columns" [dataSource]="dataSource"></app-widget-table>
         </div>
 
-        <!-- view table -->
-        <app-widget-table *ngIf="list" [columns]="columns" [dataSource]="dataSource"></app-widget-table>
+       
 
-        <!-- paginated -->
-        <div style="display: flex; justify-content: center;   ">
+
+</div>
+ <!-- paginated -->
+    <div *ngIf="pageData" style="display: flex; justify-content: center;  ">
             <!-- selected page size -->
             <mat-form-field appearance="outline" style="width: 150px; padding: 0px; margin: 0px;">
                 <mat-label>Itens por página:</mat-label>
@@ -42,7 +55,4 @@
                     <mat-icon>arrow_forward_ios</mat-icon></button>
 
             </div>
-        </div>
     </div>
-
-</div>

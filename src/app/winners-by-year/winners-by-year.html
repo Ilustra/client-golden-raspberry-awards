@@ -1,0 +1,13 @@
+<div   style="margin: 20px; ">
+    <!-- view table -->
+               
+    <app-widget-table [title]="title" [columns]="columns" [dataSource]="dataSource" >
+        <ng-content>
+             <mat-form-field appearance="outline" class="yaer" >
+                <mat-label>Ano</mat-label>
+                <input matInput placeholder="Ex. 1980" type="number" [(ngModel)]="selectedYear" (input)="onYearChange($event)"
+                    placeholder="Digite o ano">
+            </mat-form-field>
+        </ng-content>
+    </app-widget-table>
+</div>

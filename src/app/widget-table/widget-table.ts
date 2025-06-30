@@ -12,7 +12,7 @@ import { MatCardModule } from '@angular/material/card';
   styleUrl: './widget-table.css',
 })
 export class WidgetTable<T> implements OnInit, OnChanges, AfterViewInit {
-
+  @Input() title = ""
   @Input() dataSource: MatTableDataSource<T, MatPaginator>;
   @Input() columns: TableColumn[] = [];
   visibleColumns?: Array<keyof T | string>;

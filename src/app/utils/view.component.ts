@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { CrudService } from "./crud.service";
 import { Base, Pageable, PageData } from "../model/PageData";
 import { MatTableDataSource } from "@angular/material/table";
@@ -11,6 +11,7 @@ import { MatSort } from "@angular/material/sort";
   template: '<div></div>'
 })
 export class View<T> implements OnInit, OnDestroy, AfterViewInit {
+   
     selectedYear: any;
     selectedWinner: any;
     pageData!: PageData; 
@@ -19,7 +20,7 @@ export class View<T> implements OnInit, OnDestroy, AfterViewInit {
             sorted: false,
 	        unsorted: false
         },
-        pageSize: 10,
+        pageSize: 5,
         pageNumber: 0,
         offset: 0,
         paged: false,
@@ -34,24 +35,29 @@ export class View<T> implements OnInit, OnDestroy, AfterViewInit {
     pageSizeOptions: number[] = [5, 10, 20,40, 80]
     constructor(
     protected service: CrudService<Base, number>,
+
     ) {
     this.list = null;
+
     this.dataSource = new MatTableDataSource();
     this.data$
       .pipe(
       filter<any[]>(Boolean))
       .subscribe((itens: any) => {
-
+        
         this.list = itens.content;
-        this.dataSource.data = itens.content;
+        this.dataSource.data = itens.content || itens.years || itens.studios|| itens   ;
+   
         this.pageable = itens.pageable;
         this.pageData = itens
     });
     }
 
     ngAfterViewInit(): void {
+      
         this.dataSource.sort = this.sort;
-        this.findAll();
+        this.findAll("?page=0&size=5");
+
     }
     ngOnDestroy(): void {
       
@@ -59,53 +65,29 @@ export class View<T> implements OnInit, OnDestroy, AfterViewInit {
     ngOnInit(): void {
        
     }
-    findAll(){
-        let page = '?page='+ this.pageable.pageNumber +'&size='+this.pageable.pageSize 
-        if(this.selectedWinner){
-            page+='&winner='+this.selectedWinner
-        }
-        if(this.selectedYear){
-            page+= '&year='+ this.selectedYear
-        }
-        this.service.findAll(page).subscribe((data: any)=>{
-            this.loading = false;
-            this.subject$.next(data);
+    findAll(param: string){
+        this.loading = true;
+      
+        this.service.findAll(param).subscribe({
+            next:(res: any)=>{
+                console.log(param+' ->', res)
+                if(param==='?projection=max-min-win-interval-for-producers'){
+                    this.subject$.next([...res.min, ...res.max])
+                }else{
+                     this.subject$.next(res);
+                }
+        
+            setTimeout(() => {
+                this.loading = false;
+            }, 2000);
+            }, 
+            error: (err)=>{
+                console.error(err)
+                this.loading = false;
+            }
         })
     }
-    onYearChange($event: any){
-        this.clearPaginated();
-        this.selectedYear = $event.target.value
 
-        this.findAll()
-    }
-    onWinnerChange($event: any){
-        this.clearPaginated();
-        this.selectedWinner = $event.target.value
-        this.findAll()
-    }
-    onPageSizeChange(){
-
-    }
-    onSizeChange ($event: any){
-        this.pageable.pageSize = $event.target.value
-        this.findAll();
-    }
-    onPreviousPage(){
-        if (this.pageable.pageNumber > 0) {
-            this.pageable.pageNumber--;
-            this.findAll();
-        }
-    }
-    onNextPage(){
-        if (this.pageData && this.pageable.pageNumber < this.pageData.totalPages - 1) {
-            this.pageable.pageNumber++;
-            this.findAll();
-        }
-    }
-    clearPaginated() {
-        this.pageable.pageNumber = 0;
-        this.pageable.pageSize = 10;
-    }
 
 }
     
