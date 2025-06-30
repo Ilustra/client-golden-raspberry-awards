@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MoreOneWinner } from './more-one-winner';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 describe('MoreOneWinner', () => {
   let component: MoreOneWinner;
@@ -8,7 +10,11 @@ describe('MoreOneWinner', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MoreOneWinner]
+      imports: [MoreOneWinner],
+        providers: [
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
     })
     .compileComponents();
 

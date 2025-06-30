@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { StudiosMostWins } from './studios-most-wins';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient } from '@angular/common/http';
 
 describe('StudiosMostWins', () => {
   let component: StudiosMostWins;
@@ -8,7 +10,11 @@ describe('StudiosMostWins', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [StudiosMostWins]
+      imports: [StudiosMostWins],
+        providers: [
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
     })
     .compileComponents();
 
