@@ -1,10 +1,8 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { View } from '../utils/view.component';
 import { TableColumn } from '../model/TableColumn';
-import { ListAllMoviesService } from '../service/list-all-movies-service';
 import { WidgetTable } from "../widget-table/widget-table";
-import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
-import { StudioMostWinsService } from '../service/studio-most-wins';
+import { StudioWithWincountService } from '../service/studio-with-wincount-service';
 
 @Component({
   selector: 'app-studios-most-wins',
@@ -16,21 +14,21 @@ export class StudiosMostWins extends View<any> {
     title="Top 3 studios with winners"
    columns: TableColumn[]=[
       {
-        label: "Year",
-        property: "year",
+        label: "Name",
+        property: "name",
         type: "text",
         sortable: false,
       },
       {
         label: "Win Count",
-        property: "winnerCount",
+        property: "winCount",
         type: "text",
         sortable: false,
       },
      
       
     ];
-    constructor(protected override service: StudioMostWinsService, protected cdr: ChangeDetectorRef){
+    constructor(protected override service: StudioWithWincountService, protected cdr: ChangeDetectorRef){
       super(service);
     }
     override ngOnInit(): void {

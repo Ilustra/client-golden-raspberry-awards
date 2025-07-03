@@ -1,4 +1,10 @@
-<div   style="margin: 20px; ">
+<div>
     <!-- view table -->
-    <app-widget-table [title]="title" [columns]="columns" [dataSource]="dataSource" ></app-widget-table>
+    <app-widget-table [title]="title" [columns]="columns" [dataSource]="dataSource" >
+        <span>Maximum</span>
+    </app-widget-table>
+   
+    <app-widget-table  [columns]="columns" [dataSource]="dataSource" >
+         <span>Minimum</span>
+    </app-widget-table>
 </div>

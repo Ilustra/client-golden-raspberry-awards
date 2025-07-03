@@ -64,8 +64,8 @@ export class View<T> implements OnInit, OnDestroy, AfterViewInit {
 
         this.service.findAll(param).subscribe({
             next: (res: any) => {
-                console.log(param + ' ->', res)
-                if (param === '?projection=max-min-win-interval-for-producers') {
+
+                if (res?.min) {
                     this.subject$.next([...res.min, ...res.max])
                 } else {
                     this.subject$.next(res);
