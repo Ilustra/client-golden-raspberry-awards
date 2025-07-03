@@ -9,16 +9,18 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-winners-by-year',
-  imports: [WidgetTable, CommonModule, WidgetTable, FormsModule, MatButtonModule, MatDividerModule, FormsModule, MatFormFieldModule, MatInputModule
+  imports: [MatIconModule, WidgetTable, CommonModule, WidgetTable, FormsModule, MatButtonModule, MatDividerModule, FormsModule, MatFormFieldModule, MatInputModule
   ],
   templateUrl: './winners-by-year.html',
   styleUrl: './winners-by-year.css'
 })
 export class WinnersByYear extends View<any> {
-  title = "Filme por Ano"
+  title = "List movie winners by year"
   columns: TableColumn[] = [
     {
       label: "title",
@@ -54,17 +56,35 @@ export class WinnersByYear extends View<any> {
 
 
   ];
+
+  private destroy$ = new Subject<void>();
+  private yearSearchSubject = new Subject<string>();
+
   constructor(protected override service: ListAllMoviesService, protected cdr: ChangeDetectorRef) {
     super(service);
+    this.yearSearchSubject.pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      takeUntil(this.destroy$)
+    ).subscribe((year: any) => {
+      this.selectedYear = year;
+      let params = ""
+      if (year) {
+        params = '?page=0&size=15&winner=true&year=' + year
+      }
+      this.findAll(params)
+    });
   }
   override ngOnInit(): void {
 
   }
   override ngAfterViewInit(): void {
     this.cdr.detectChanges()
-    this.findAll("?winner=true&year=1980")
+    this.findAll("?")
   }
-    onYearChange($event: any) {
-    this.findAll("?winner=true&year=" + $event.target.value)
+  onYearChange($event: any) {
+    const year = $event.target.value;
+    this.yearSearchSubject.next(year);
+
   }
 }

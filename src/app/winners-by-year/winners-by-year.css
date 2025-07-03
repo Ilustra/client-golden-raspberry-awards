@@ -1,0 +1,11 @@
+.btn-search{
+    background-color: #0078D7;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    height: 30px;
+    width: 30px;
+}

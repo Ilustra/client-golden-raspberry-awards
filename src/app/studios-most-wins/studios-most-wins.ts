@@ -3,6 +3,7 @@ import { View } from '../utils/view.component';
 import { TableColumn } from '../model/TableColumn';
 import { ListAllMoviesService } from '../service/list-all-movies-service';
 import { WidgetTable } from "../widget-table/widget-table";
+import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-studios-most-wins',
@@ -11,7 +12,7 @@ import { WidgetTable } from "../widget-table/widget-table";
   styleUrl: './studios-most-wins.css'
 })
 export class StudiosMostWins extends View<any> {
-    title="Estúdios"
+    title="Top 3 studios with winners"
    columns: TableColumn[]=[
       {
         label: "Name",
@@ -20,7 +21,7 @@ export class StudiosMostWins extends View<any> {
         sortable: false,
       },
       {
-        label: "Win",
+        label: "Win Count",
         property: "winCount",
         type: "text",
         sortable: false,

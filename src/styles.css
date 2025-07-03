@@ -35,9 +35,26 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     width: 90%;
 }
 .input-search:focus{
-    border: none;
     outline: none;
 }
 .text-center{
     text-align: center!important;
+}
+.grid{
+    display: grid;
+}
+.gap-8{
+    gap: 8px;
+}
+.justify-between{
+    justify-content: space-between;
+}
+.justify-center{
+    justify-content: center;
+}
+.align-center{
+    align-items: center;
+}
+.mb-20{
+    margin-bottom: 20px;
 }

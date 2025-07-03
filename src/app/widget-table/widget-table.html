@@ -1,5 +1,5 @@
-<mat-card class="example-card" appearance="outlined">
-  <div *ngIf="title" style="display: flex; justify-content: space-between; align-items: center;">
+<div class="example-card" appearance="outlined">
+  <div class=" grid gap-8 " *ngIf="title" >
     <span style="margin: 5px; font-size: 16px; font-weight: bolder; color: rgb(78, 78, 78);">{{title}} </span>
     <ng-content></ng-content>
   </div>
@@ -45,4 +45,4 @@
 
     <tr *matRowDef="let row; columns: visibleColumns;" mat-row></tr>
   </table>
-</mat-card>
+</div>
