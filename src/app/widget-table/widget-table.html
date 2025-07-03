@@ -1,48 +1,53 @@
 <div class="example-card" appearance="outlined">
   <div class=" grid gap-8 " *ngIf="title" >
-    <span style="margin: 5px; font-size: 16px; font-weight: bolder; color: rgb(78, 78, 78);">{{title}} </span>
+    <span style="margin: 5px; font-size: 16px; font-weight: bolder; color: var(--colo-title)">{{title}} </span>
     <ng-content></ng-content>
   </div>
 
-  <table [dataSource]="dataSource" mat-table>
 
-    <ng-container *ngFor="let column of columns">
-      <ng-container *ngIf="column.type === 'text'" [matColumnDef]="column.property">
-
-        <ng-container>
-          <th id="headerTable" *matHeaderCellDef [ngClass]="column.css">
-            {{column.label }}
-            <div *ngIf="column.property =='year' && column.onChange">
-              <input class="input-search" placeholder="Filter by year"
-                (input)="column.onChange($event)" />
-            </div>
-            <div *ngIf="column.property =='winner' && column.onChange">
-              <select class="select-filter" (change)="column.onChange($event)">
-                <option value="">Yes/No</option>
-                <option value="true">Yes</option>
-                <option value="false">No</option>
-              </select>
-            </div>
-
-
-          </th>
-        </ng-container>
-        <td *matCellDef="let row">
-          <div id="id-cell-column">
-            {{ row[column.property]?.label || row[column.property]}}
+  <table class="custom-table">
+    <thead>
+      <tr>
+        <th *ngFor="let column of columns" [ngClass]="column.css">
+          {{column.label}}
+          
+          <!-- filter by year -->
+          <div *ngIf="column.property === 'year' && column.onChange" class="filter-container">
+            <input class="input-search" 
+                   placeholder="Filter by year"
+                   type="number"
+                   (input)="onColumnChange(column, $event)" />
+          </div>
+          
+          <!-- filter by winner -->
+          <div *ngIf="column.property === 'winner' && column.onChange" class="filter-container">
+            <select class="select-filter" (change)="onColumnChange(column, $event)">
+              <option value="">All</option>
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+            </select>
+          </div>
+        </th>
+      </tr>
+    </thead>
+    
+    <tbody>
+      <tr *ngFor="let row of dataSource?.data" class="data-row">
+        <td *ngFor="let column of columns" [ngClass]="column.css">
+          <div class="cell-content">
+            <span >
+              {{ getValue(row, column.property) }}
+            </span>
           </div>
         </td>
-        <tr *ngIf="!dataSource?.data?.length">
-          <td [attr.colspan]="columns.length">
-            Dados não encontrados.
-          </td>
-        </tr>
-      </ng-container>
-
-    </ng-container>
-
-    <tr *matHeaderRowDef="visibleColumns" mat-header-row></tr>
-
-    <tr *matRowDef="let row; columns: visibleColumns;" mat-row></tr>
+      </tr>
+      
+      <!-- not found -->
+      <tr *ngIf="!dataSource?.data?.length" class="no-data-row">
+        <td [attr.colspan]="columns.length" class="no-data-cell">
+          {{messageData}}
+        </td>
+      </tr>
+    </tbody>
   </table>
 </div>

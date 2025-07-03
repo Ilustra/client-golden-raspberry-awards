@@ -1,7 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 :root {
     --background-gray-100: #F0F0F0;
-    --background-gray-300: #c7c7c7
+    --background-gray-300: #c7c7c7;
+    --colo-title: #4e4e4e;
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
@@ -57,4 +58,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 .mb-20{
     margin-bottom: 20px;
+}
+.m-4{
+    margin: 10px 0px 10px 0px;
+}
+.mat-cell {
+  padding: 0px !important; /* Exemplo: padding de 4px */
+  border-bottom: 0px solid rgba(0, 0, 0, 0.12); /* Ajuste da borda */
+}
+
+.mat-header-cell {
+  padding: 0px !important; /* Exemplo: padding do header */
 }

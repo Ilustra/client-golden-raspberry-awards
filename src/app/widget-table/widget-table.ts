@@ -22,6 +22,7 @@ import { MatSelectModule } from '@angular/material/select';
   styleUrl: './widget-table.css',
 })
 export class WidgetTable<T> implements OnInit, OnChanges, AfterViewInit {
+  @Input() messageData="No results found"
   @Input() title = ""
   @Input() dataSource: MatTableDataSource<T, MatPaginator>;
   @Input() columns: TableColumn[] = [];
@@ -40,5 +41,13 @@ export class WidgetTable<T> implements OnInit, OnChanges, AfterViewInit {
   }
   ngOnInit(): void {
     
+  }
+  getValue(row: any, property: string): any {
+  return row[property]?.label || row[property] || '';
+  }
+  onColumnChange(column: TableColumn, event: any) {
+    if (column.onChange) {
+      column.onChange(event);
+    }
   }
 }

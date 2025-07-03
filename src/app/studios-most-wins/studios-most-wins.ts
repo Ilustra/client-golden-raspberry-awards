@@ -36,6 +36,12 @@ export class StudiosMostWins extends View<any> {
     }
     override ngAfterViewInit(): void {
       this.cdr.detectChanges()
-      this.findAll()
+      this.service.findAll().subscribe((res: any)=>{
+        this.subject$.next(this.sortedList(res.studios).slice(0,3));
+      })
+    }
+    sortedList(list: any[]){
+      return list
+          .sort((a: any, b: any) => b.winCount - a.winCount)
     }
 }

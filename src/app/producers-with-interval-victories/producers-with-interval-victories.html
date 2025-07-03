@@ -1,10 +1,8 @@
-<div>
+<div class="flex-col" >
     <!-- view table -->
-    <app-widget-table [title]="title" [columns]="columns" [dataSource]="dataSource" >
-        <span>Maximum</span>
-    </app-widget-table>
-   
-    <app-widget-table  [columns]="columns" [dataSource]="dataSource" >
-         <span>Minimum</span>
-    </app-widget-table>
+    <span style="margin: 5px; font-size: 16px; font-weight: bolder; color: var(--colo-title);">{{title}} </span>
+    <span  class="m-4">Maximum</span>
+    <app-widget-table  [columns]="columns" [dataSource]="dataSource" ></app-widget-table>
+    <span style="margin-top: 20px;" class="m-4">Minimum</span>
+    <app-widget-table  [columns]="columns" [dataSource]="dataSource" ></app-widget-table>
 </div>

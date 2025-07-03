@@ -7,7 +7,7 @@ import { StudioMostWinsService } from '../service/studio-most-wins';
 
 @Component({
   selector: 'app-more-one-winner',
-  imports: [WidgetTable, NgIf],
+  imports: [WidgetTable],
   templateUrl: './more-one-winner.html',
   styleUrl: './more-one-winner.css'
 })
