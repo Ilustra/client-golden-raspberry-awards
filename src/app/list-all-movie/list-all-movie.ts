@@ -14,6 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-list-all-movie',
@@ -60,15 +61,26 @@ export class ListAllMovie extends View<Movie> {
       css: ['text-center'],
     }
   ];
+
+  private destroy$ = new Subject<void>();
+  private yearSearchSubject = new Subject<string>();
+
   constructor(protected override service: ListAllMoviesService, protected cdr: ChangeDetectorRef) {
     super(service);
+        this.yearSearchSubject.pipe(
+      debounceTime(500), 
+      distinctUntilChanged(), 
+      takeUntil(this.destroy$) 
+    ).subscribe((year: any) => {
+      this.clearPaginated();
+      this.selectedYear = year;
+      this.findAll(this.getParam());
+    });
   }
 
   onYearChange($event: any) {
-    this.clearPaginated();
-    this.selectedYear = $event.target.value
-
-    this.findAll(this.getParam())
+    const year = $event.target.value;
+    this.yearSearchSubject.next(year);
   }
 
   onWinnerChange($event: any) {
