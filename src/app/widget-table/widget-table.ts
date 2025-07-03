@@ -4,10 +4,20 @@ import { TableColumn } from '../model/TableColumn';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-widget-table',
-  imports: [MatTableModule, MatPaginatorModule,CommonModule, MatCardModule],
+  imports: [MatTableModule, MatPaginatorModule,CommonModule, MatCardModule,
+    FormsModule, MatButtonModule, MatDividerModule, MatIconModule, FormsModule, MatFormFieldModule, MatInputModule,
+    MatSelectModule
+  ],
   templateUrl: './widget-table.html',
   styleUrl: './widget-table.css',
 })

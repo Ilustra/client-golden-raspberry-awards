@@ -7,81 +7,75 @@ import { MatSort } from "@angular/material/sort";
 
 
 @Component({
-  selector: 'app-view',
-  template: '<div></div>'
+    selector: 'app-view',
+    template: '<div></div>'
 })
 export class View<T> implements OnInit, OnDestroy, AfterViewInit {
-   
+
     selectedYear: any;
     selectedWinner: any;
-    pageData!: PageData; 
+    pageData!: PageData;
     pageable: Pageable = {
         sort: {
             sorted: false,
-	        unsorted: false
+            unsorted: false
         },
-        pageSize: 5,
+        pageSize: 15,
         pageNumber: 0,
         offset: 0,
         paged: false,
         unpaged: false
     }
     list: any[] | null;
-    dataSource: MatTableDataSource<any> ;
+    dataSource: MatTableDataSource<any>;
     subject$: ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
     data$: Observable<any[]> = this.subject$.asObservable();
-    loading: boolean = false; 
+    loading: boolean = false;
     @ViewChild(MatSort) sort!: MatSort;
-    pageSizeOptions: number[] = [5, 10, 20,40, 80]
+
     constructor(
-    protected service: CrudService<Base, number>,
-
+        protected service: CrudService<Base, number>,
     ) {
-    this.list = null;
-
-    this.dataSource = new MatTableDataSource();
-    this.data$
-      .pipe(
-      filter<any[]>(Boolean))
-      .subscribe((itens: any) => {
-        
-        this.list = itens.content;
-        this.dataSource.data = itens.content || itens.years || itens.studios|| itens   ;
-   
-        this.pageable = itens.pageable;
-        this.pageData = itens
-    });
+        this.list = null;
+        this.dataSource = new MatTableDataSource();
+        this.data$
+            .pipe(
+                filter<any[]>(Boolean))
+            .subscribe((itens: any) => {
+                this.list = itens.content;
+                this.dataSource.data = itens.content || itens.years || itens.studios || itens;
+                this.pageable = itens.pageable;
+                this.pageData = itens
+            });
     }
 
     ngAfterViewInit(): void {
-      
         this.dataSource.sort = this.sort;
-        this.findAll("?page=0&size=5");
-
+        this.findAll("?page=0&size="+this.pageable.pageSize);
     }
     ngOnDestroy(): void {
-      
+
     }
     ngOnInit(): void {
-       
+
     }
-    findAll(param: string){
+    findAll(param: string) {
         this.loading = true;
-      
+
         this.service.findAll(param).subscribe({
-            next:(res: any)=>{
-                console.log(param+' ->', res)
-                if(param==='?projection=max-min-win-interval-for-producers'){
+            next: (res: any) => {
+                console.log(param + ' ->', res)
+                if (param === '?projection=max-min-win-interval-for-producers') {
                     this.subject$.next([...res.min, ...res.max])
-                }else{
-                     this.subject$.next(res);
+                } else {
+                    this.subject$.next(res);
                 }
-        
-            setTimeout(() => {
-                this.loading = false;
-            }, 2000);
-            }, 
-            error: (err)=>{
+
+                setTimeout(() => {
+                    this.loading = false;
+                }, 2000);
+            },
+            error: (err) => {
                 console.error(err)
                 this.loading = false;
             }
@@ -90,4 +84,3 @@ export class View<T> implements OnInit, OnDestroy, AfterViewInit {
 
 
 }
-    

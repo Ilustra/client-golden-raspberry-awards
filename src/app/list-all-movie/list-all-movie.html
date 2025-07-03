@@ -1,58 +1,39 @@
-<div style="padding: 10px;">
+<div class="card-shadow p-10 m-20" >
 
+    <div>
+        <h3>List movies</h3>
+    </div>
 
-        <!-- Filter by year and winners -->
-        <div class="card-filter">
-            <div>
-                <p>Filters:</p>
+    <div style="margin: 20px;">
+        <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+        <app-widget-table [columns]="columns" [dataSource]="dataSource"></app-widget-table>
+        <!-- paginated -->
+        <div *ngIf="pageData" class="paginator">
+            <div *ngIf="pageData" style="display: flex; justify-content: center;  align-items: center; ">
+                <button matIconButton (click)="goToFirstPage()" [disabled]="pageable.pageNumber === 0">
+                    <mat-icon>first_page</mat-icon>
+                </button>
+                <button matIconButton (click)="onPreviousPage()" [disabled]="pageable.pageNumber === 0">
+                    <mat-icon>arrow_left</mat-icon>
+                </button>
+                <div class="page-numbers">
+                    <button *ngFor="let page of getVisiblePages()" [class.active]="page === pageable.pageNumber + 1"
+                        (click)="goToPage(page - 1)" class="page-number-btn">
+                        {{ page }}
+                    </button>
+                </div>
+                <button matIconButton (click)="onNextPage()"
+                    [disabled]="pageable.pageNumber + 1 >= pageData.totalPages">
+                    <mat-icon>arrow_right</mat-icon>
+                </button>
+              <button matIconButton (click)="goToLastPage()"
+                    [disabled]="pageable.pageNumber + 1 >= pageData.totalPages">
+                    <mat-icon>last_page</mat-icon></button>
             </div>
-            <div class="container">
-            <mat-form-field appearance="outline" class="yaer" >
-                <mat-label>Ano</mat-label>
-                <input matInput placeholder="Ex. 1980" type="number" [(ngModel)]="selectedYear" (input)="onYearChange($event)"
-                    placeholder="Digite o ano">
-            </mat-form-field>
-            <mat-form-field appearance="outline" class="winner">
-                <mat-label>Winners</mat-label>
-                <select [(ngModel)]="selectedWinner" (change)="onWinnerChange($event)" matNativeControl >
-                    <option value="">Todos</option>
-                    <option value="true">Sim</option>
-                    <option value="false">Não</option>
-                </select>
-            </mat-form-field>
-
-            </div>
-
         </div>
-        <div style="margin: 20px;">
-            <!-- view table -->
-            <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
-            <app-widget-table  [columns]="columns" [dataSource]="dataSource"></app-widget-table>
-        </div>
+    </div>
 
-       
+
 
 
 </div>
- <!-- paginated -->
-    <div *ngIf="pageData" style="display: flex; justify-content: center;  ">
-            <!-- selected page size -->
-            <mat-form-field appearance="outline" style="width: 150px; padding: 0px; margin: 0px;">
-                <mat-label>Itens por página:</mat-label>
-                <select [(ngModel)]="pageable.pageSize" (change)="onSizeChange($event)" matNativeControl>
-                       <option *ngFor="let size of pageSizeOptions" [value]="size">{{ size }}</option>
-                </select>
-            </mat-form-field>
-
-            <!-- navigation previews or next page -->
-            <div *ngIf="pageData"
-                style="display: flex; justify-content: center;  align-items: center; margin-top: -20px;">
-                <button matIconButton (click)="onPreviousPage()" [disabled]="pageable.pageNumber === 0">
-                    <mat-icon>arrow_back_ios_new</mat-icon></button>
-                <span>Página {{ pageable.pageNumber + 1 }} de {{ pageData.totalPages }}</span>
-                <button matIconButton (click)="onNextPage()"
-                    [disabled]="pageable.pageNumber + 1 >= pageData.totalPages">
-                    <mat-icon>arrow_forward_ios</mat-icon></button>
-
-            </div>
-    </div>

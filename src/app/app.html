@@ -1,8 +1,16 @@
-<div style="display: flex; flex-direction: row; position: relative;">
-<app-menu></app-menu>
-<div style="width: 100%;">
-<router-outlet />
-</div>
+<div style="display: flex; flex-direction: column; position: relative; height: 100%;">
+    <div class="flex-col" style="height: 100%;">
+
+        <div style="background-color: #32373C; padding: 20px; color: #fff;">
+            {{title}}
+        </div>
+        <div class="flex-row" style="width: 100%; height: 100%; ">       
+            <app-menu></app-menu>
+            <div style="width: 100%;">
+                <router-outlet />
+            </div>
+        </div>
+    </div>
 
 
 </div>
