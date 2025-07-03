@@ -12,12 +12,12 @@
         <ng-container>
           <th id="headerTable" *matHeaderCellDef [ngClass]="column.css">
             {{column.label }}
-            <div *ngIf="column.property =='year'">
+            <div *ngIf="column.property =='year' && column.onChange">
               <input class="input-search" placeholder="Filter by year"
-                (input)="column.onChange && column.onChange($event)" />
+                (input)="column.onChange($event)" />
             </div>
-            <div *ngIf="column.property =='winner'">
-              <select class="select-filter" (change)="column.onChange && column.onChange($event)">
+            <div *ngIf="column.property =='winner' && column.onChange">
+              <select class="select-filter" (change)="column.onChange($event)">
                 <option value="">Yes/No</option>
                 <option value="true">Yes</option>
                 <option value="false">No</option>
