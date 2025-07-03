@@ -59,7 +59,7 @@ export class View<T> implements OnInit, OnDestroy, AfterViewInit {
     ngOnInit(): void {
 
     }
-    findAll(param: string) {
+    findAll(param?: string) {
         this.loading = true;
 
         this.service.findAll(param).subscribe({

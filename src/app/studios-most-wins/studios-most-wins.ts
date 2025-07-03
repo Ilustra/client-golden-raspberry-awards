@@ -4,6 +4,7 @@ import { TableColumn } from '../model/TableColumn';
 import { ListAllMoviesService } from '../service/list-all-movies-service';
 import { WidgetTable } from "../widget-table/widget-table";
 import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
+import { StudioMostWinsService } from '../service/studio-most-wins';
 
 @Component({
   selector: 'app-studios-most-wins',
@@ -15,21 +16,21 @@ export class StudiosMostWins extends View<any> {
     title="Top 3 studios with winners"
    columns: TableColumn[]=[
       {
-        label: "Name",
-        property: "name",
+        label: "Year",
+        property: "year",
         type: "text",
         sortable: false,
       },
       {
         label: "Win Count",
-        property: "winCount",
+        property: "winnerCount",
         type: "text",
         sortable: false,
       },
      
       
     ];
-    constructor(protected override service: ListAllMoviesService, protected cdr: ChangeDetectorRef){
+    constructor(protected override service: StudioMostWinsService, protected cdr: ChangeDetectorRef){
       super(service);
     }
     override ngOnInit(): void {
@@ -37,6 +38,6 @@ export class StudiosMostWins extends View<any> {
     }
     override ngAfterViewInit(): void {
       this.cdr.detectChanges()
-      this.findAll("?projection=studios-with-win-count")
+      this.findAll()
     }
 }

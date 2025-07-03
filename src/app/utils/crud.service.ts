@@ -16,7 +16,10 @@ export abstract class CrudService<T, ID> implements Crud<T, ID> {
   ) { }
 
 
-  findAll(page: string): Observable<PageData> {
+  findAll(page?: string): Observable<PageData> {
+    if(!page){
+      page=""
+    }
     return this._http.get<PageData>(this._baseUrl   + this._api + page)
   }
  
