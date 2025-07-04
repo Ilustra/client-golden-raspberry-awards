@@ -85,8 +85,7 @@ export class WinnersByYear extends View<any> {
     this.cdr.detectChanges()
   }
   onSearch($event: any){
-    console.log('search', this.selectedYear )
-      this.findAll('?year='+this.selectedYear)
+    this.findAll('?year='+this.selectedYear)
   }
   onYearChange($event: any) {
     const year = $event.target.value;
