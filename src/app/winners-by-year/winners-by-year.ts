@@ -81,8 +81,12 @@ export class WinnersByYear extends View<any> {
 
   }
   override ngAfterViewInit(): void {
-    this.findAll("?year=1")
+
     this.cdr.detectChanges()
+  }
+  onSearch($event: any){
+    console.log('search', this.selectedYear )
+      this.findAll('?year='+this.selectedYear)
   }
   onYearChange($event: any) {
     const year = $event.target.value;

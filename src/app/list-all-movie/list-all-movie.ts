@@ -113,8 +113,8 @@ export class ListAllMovie extends View<Movie> {
     this.pageable.pageSize = 15;
   }
   override ngAfterViewInit(): void {
-      this.cdr.detectChanges()
       this.findAll(this.getParam())
+      this.cdr.detectChanges()
   }
   getParam() {
     let page = '?page=' + this.pageable.pageNumber + '&size=' + this.pageable.pageSize

@@ -5,7 +5,7 @@
        <div class="flex-row justify-between align-center mb-20">
         <input type="number" class="input-search" placeholder="Filter by year" [(ngModel)]="selectedYear"
             (input)="onYearChange($event)" />
-        <button (click)="onYearChange($event)" class="btn-search">
+        <button (click)="onSearch($event)" class="btn-search">
                <mat-icon>search</mat-icon>
         </button>
        </div>
