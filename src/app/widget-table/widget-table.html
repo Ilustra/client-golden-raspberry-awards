@@ -33,7 +33,7 @@
     
     <tbody>
       <tr *ngFor="let row of dataSource?.data" class="data-row">
-        <td *ngFor="let column of columns" [ngClass]="column.css">
+        <td *ngFor="let column of columns" >
           <div class="cell-content">
             <span >
               {{ getValue(row, column.property) }}
