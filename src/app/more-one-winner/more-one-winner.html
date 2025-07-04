@@ -1,2 +1,4 @@
     <!-- view table -->
+
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
     <app-widget-table [title]="title" [columns]="columns" [dataSource]="dataSource" ></app-widget-table>

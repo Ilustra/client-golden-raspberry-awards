@@ -1,8 +1,8 @@
 <div class="flex-col" >
-    <!-- view table -->
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
     <span style="margin: 5px; font-size: 16px; font-weight: bolder; color: var(--colo-title);">{{title}} </span>
     <span  class="m-4">Maximum</span>
-    <app-widget-table  [columns]="columns" [dataSource]="dataSource" ></app-widget-table>
+    <app-widget-table  [columns]="columns" [dataSource]="dataSourceMax" ></app-widget-table>
     <span style="margin-top: 20px;" class="m-4">Minimum</span>
-    <app-widget-table  [columns]="columns" [dataSource]="dataSource" ></app-widget-table>
+    <app-widget-table  [columns]="columns" [dataSource]="dataSourceMin" ></app-widget-table>
 </div>

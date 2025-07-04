@@ -3,10 +3,12 @@ import { View } from '../utils/view.component';
 import { TableColumn } from '../model/TableColumn';
 import { WidgetTable } from "../widget-table/widget-table";
 import { StudioWithWincountService } from '../service/studio-with-wincount-service';
+import { MatProgressBar } from '@angular/material/progress-bar';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-studios-most-wins',
-  imports: [WidgetTable],
+  imports: [WidgetTable, CommonModule, MatProgressBar ],
   templateUrl: './studios-most-wins.html',
   styleUrl: './studios-most-wins.css'
 })
@@ -35,10 +37,15 @@ export class StudiosMostWins extends View<any> {
        
     }
     override ngAfterViewInit(): void {
-      this.cdr.detectChanges()
+  
+      this.loading=true
       this.service.findAll().subscribe((res: any)=>{
         this.subject$.next(this.sortedList(res.studios).slice(0,3));
+        setTimeout(() => {
+           this.loading=false;
+        }, 2000);
       })
+      this.cdr.detectChanges()
     }
     sortedList(list: any[]){
       return list

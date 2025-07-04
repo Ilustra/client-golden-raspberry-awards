@@ -13,13 +13,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSelectModule } from '@angular/material/select';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressBar, MatProgressBarModule } from '@angular/material/progress-bar';
 import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-list-all-movie',
   imports: [CommonModule, WidgetTable, FormsModule, MatButtonModule, MatDividerModule, MatIconModule, FormsModule, MatFormFieldModule, MatInputModule, MatSlideToggleModule,
-    MatSelectModule, MatProgressBarModule
+    MatSelectModule, MatProgressBar
   ],
   templateUrl: './list-all-movie.html',
   styleUrl: './list-all-movie.css'
@@ -112,7 +112,10 @@ export class ListAllMovie extends View<Movie> {
     this.pageable.pageNumber = 0;
     this.pageable.pageSize = 15;
   }
-
+  override ngAfterViewInit(): void {
+      this.cdr.detectChanges()
+      this.findAll(this.getParam())
+  }
   getParam() {
     let page = '?page=' + this.pageable.pageNumber + '&size=' + this.pageable.pageSize
     if (this.selectedWinner) {

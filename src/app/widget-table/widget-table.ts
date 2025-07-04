@@ -43,7 +43,7 @@ export class WidgetTable<T> implements OnInit, OnChanges, AfterViewInit {
     
   }
   getValue(row: any, property: string): any {
-  return row[property]?.label || row[property] || '';
+  return  row[property];
   }
   onColumnChange(column: TableColumn, event: any) {
     if (column.onChange) {

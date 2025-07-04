@@ -11,10 +11,12 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
+import { MatProgressBar } from '@angular/material/progress-bar';
+import { WinnersByYearService } from '../service/winners-by-year-service';
 
 @Component({
   selector: 'app-winners-by-year',
-  imports: [MatIconModule, WidgetTable, CommonModule, WidgetTable, FormsModule, MatButtonModule, MatDividerModule, FormsModule, MatFormFieldModule, MatInputModule
+  imports: [MatIconModule, WidgetTable, MatProgressBar, CommonModule, WidgetTable, FormsModule, MatButtonModule, MatDividerModule, FormsModule, MatFormFieldModule, MatInputModule, CommonModule
   ],
   templateUrl: './winners-by-year.html',
   styleUrl: './winners-by-year.css'
@@ -60,7 +62,7 @@ export class WinnersByYear extends View<any> {
   private destroy$ = new Subject<void>();
   private yearSearchSubject = new Subject<string>();
 
-  constructor(protected override service: ListAllMoviesService, protected cdr: ChangeDetectorRef) {
+  constructor(protected override service: WinnersByYearService, protected cdr: ChangeDetectorRef) {
     super(service);
     this.yearSearchSubject.pipe(
       debounceTime(500),
@@ -70,7 +72,7 @@ export class WinnersByYear extends View<any> {
       this.selectedYear = year;
       let params = ""
       if (year) {
-        params = '?page=0&size=15&winner=true&year=' + year
+        params = '?year=' + year
       }
       this.findAll(params)
     });
@@ -79,8 +81,8 @@ export class WinnersByYear extends View<any> {
 
   }
   override ngAfterViewInit(): void {
+    this.findAll("?year=1")
     this.cdr.detectChanges()
-    this.findAll("?")
   }
   onYearChange($event: any) {
     const year = $event.target.value;

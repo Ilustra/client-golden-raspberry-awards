@@ -76,8 +76,7 @@ export class View<T> implements OnInit, OnDestroy, AfterViewInit {
                 }, 2000);
             },
             error: (err) => {
-                console.error(err)
-                  this.subject$.next([]);
+                this.subject$.next([]);
                 this.loading = false;
             }
         })

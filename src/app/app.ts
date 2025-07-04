@@ -9,5 +9,5 @@ import { Menu } from "./menu/menu";
   styleUrl: './app.css'
 })
 export class App {
-  protected title = 'client-golden-raspberry-awards';
+  protected title = 'Frontend Golden raspberry awards';
 }

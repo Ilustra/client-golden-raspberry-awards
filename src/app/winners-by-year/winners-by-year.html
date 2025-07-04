@@ -1,6 +1,6 @@
 <div >
     <!-- view table -->
-
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
     <app-widget-table [title]="title" messageData="No matching data found" [columns]="columns" [dataSource]="dataSource">
        <div class="flex-row justify-between align-center mb-20">
         <input type="number" class="input-search" placeholder="Filter by year" [(ngModel)]="selectedYear"
